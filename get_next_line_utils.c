@@ -6,11 +6,12 @@
 /*   By: mkirate <mkirate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 14:09:22 by mkirate           #+#    #+#             */
-/*   Updated: 2025/11/01 17:00:40 by mkirate          ###   ########.fr       */
+/*   Updated: 2025/11/03 17:39:50 by mkirate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
 
 size_t  ft_strlen(char *str)
 {
@@ -21,7 +22,29 @@ size_t  ft_strlen(char *str)
         i++;
     return (i);
 }
+char    *ft_strchr(const char *s, int c)
+{
+        char    *str;
+        size_t  i;
+        size_t  str_len;
 
+        str = (char *)s;
+        str_len = ft_strlen(str);
+        i = 0;
+        if (c == '\0')
+                return (str + str_len);
+        if (str_len == 1 && str[0] != (unsigned char)c)
+                return (0);
+        while (str[i])
+        {
+                if (str[i] == (unsigned char)c)
+                        break ;
+                i++;
+        }
+        if (str_len == i)
+                return (0);
+        return (str + i);
+}
 char *ft_strdup(char *src)
 {
         int     i;
@@ -78,4 +101,28 @@ char    *ft_strjoin(char *s1, char *s2)
                 i++;
         }
         return (new_str[s1_len + i] = '\0', new_str);
+}
+char    *ft_substr(char *s, unsigned int start, size_t len)
+{
+        size_t  i;
+        size_t  st;
+        size_t  s_len;
+        char    *substr;
+
+        if (s == NULL)
+                return (NULL);
+        st = (size_t)start;
+        s_len = ft_strlen(s);
+        if (len > s_len - st)
+                len = s_len - st;
+        substr = malloc(sizeof(char) * (len + 1));
+        if (!substr)
+                return (NULL);
+        i = 0;
+        while (i < len && st < s_len)
+        {
+                substr[i++] = s[st++];
+        }
+        substr[i] = '\0';
+        return (substr);
 }

@@ -6,49 +6,57 @@
 /*   By: mkirate <mkirate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 14:00:09 by mkirate           #+#    #+#             */
-/*   Updated: 2025/11/03 12:47:26 by mkirate          ###   ########.fr       */
+/*   Updated: 2025/11/03 18:38:40 by mkirate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+char *ft_save_storage(char *storage)
+{
+    char *temp;
+    char *result;
+    int i;
+
+    i = 0;
+    if (!storage || !*storage)
+        return (NULL);
+    while (storage[i] != '\0' && storage[i] != '\n')
+        i++;
+    if (storage[i] == '\n')
+        i++;
+    result = ft_substr(storage, 0, i);
+    temp = ft_strdup(storage + i);
+    free(storage);
+    storage = temp;
+    free(temp);
+    return (result);
+}
+
 char    *get_next_line(int fd)
 {
-    static char data[5000];
-    char *storage;
+    char data[BUFFER_SIZE];
+    static char *storage;
+    char *temp;
     int i;
-    static int offset;
-    static int read_size;
-    int len;
-
-    offset = 0;
-    read_size = 0;
-    if (offset >= read_size)
-        read_size = read(fd, data, BUFFER_SIZE);
-    i = offset;
-    while (i < read_size && data[i] != '\n')
-        i++;
-    len = i;
-    storage = (char *)malloc(sizeof(char) * (len + 1));
-    if (!storage)
+    int read_size;
+    
+    i = 0;
+    if (fd < 0 || BUFFER_SIZE <= 0)
         return (NULL);
-    ft_strncpy(storage, data + offset, len);
-    if (i < read_size && data[i] != '\n')
+    if (!storage)
+        storage =  ft_strdup("");
+    while (!ft_strchr(storage, '\n'))
     {
-        storage[len] = '\n';
-        storage[len + 1] = '\0';
-        offset = len + 1;
-        return (storage);
-    }
-    else
-    {
-        offset = len;
-        char *new_storage = get_next_line(fd);
-        if (!new_storage)
+        read_size = read(fd, data, BUFFER_SIZE);
+        if (read_size <= 0)
             return (NULL);
-        char *result = ft_strjoin(storage, new_storage);
+        data[read_size] = '\0';
+        temp = ft_strjoin(storage, data);
         free(storage);
-        free(new_storage);
-        return (result);
+        storage = temp;
     }
+    if (!storage)
+        return (free(storage), NULL);
+    return (ft_save_storage(storage)); 
 }
