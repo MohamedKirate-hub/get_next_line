@@ -6,7 +6,7 @@
 /*   By: mkirate <mkirate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 14:00:09 by mkirate           #+#    #+#             */
-/*   Updated: 2025/11/04 11:28:31 by mkirate          ###   ########.fr       */
+/*   Updated: 2025/11/04 12:07:39 by mkirate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@ char *ft_save_storage(char **storage)
 }
 char *ft_check_read_storage(char **storage)
 {
-    if (!storage && !**storage)
+    if (!storage || !*storage)
+        return (NULL);
+    if (**storage == '\0')
     {
         free(*storage);
         *storage = NULL;
-        return (*storage);
+        return (NULL);
     }
-    return (*storage);
+    return *storage;
 }
 
 char    *get_next_line(int fd)
@@ -55,7 +57,6 @@ char    *get_next_line(int fd)
     i = 0;
     if (fd < 0 || BUFFER_SIZE <= 0)
         return (NULL);
-    printf("\n--storage : %s--\n", storage);
     if (!storage)
         storage =  ft_strdup("");
     while (!ft_strchr(storage, '\n'))
