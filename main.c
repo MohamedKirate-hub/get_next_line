@@ -7,8 +7,17 @@ int main()
     line = NULL;
     int fd = open("file.txt", O_RDONLY);
     line = get_next_line(fd);
-    line = get_next_line(fd);
-    //printf("%s\n", line);
+    printf("%s",line);
     free(line);
-    close(fd);
+
+    line = get_next_line(fd);
+    printf("%s",line);
+    free(line);
+
+    line = get_next_line(fd);
+    printf("%s",line);
+    free(line);
+
+    line = get_next_line(fd);
+    printf("%s",line);
 }

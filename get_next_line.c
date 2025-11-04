@@ -6,31 +6,42 @@
 /*   By: mkirate <mkirate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 14:00:09 by mkirate           #+#    #+#             */
-/*   Updated: 2025/11/03 18:38:40 by mkirate          ###   ########.fr       */
+/*   Updated: 2025/11/04 11:28:31 by mkirate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char *ft_save_storage(char *storage)
+char *ft_save_storage(char **storage)
 {
     char *temp;
     char *result;
     int i;
 
     i = 0;
-    if (!storage || !*storage)
+    if (!*storage || !storage)
         return (NULL);
-    while (storage[i] != '\0' && storage[i] != '\n')
+    while ((*storage)[i] != '\0' && (*storage)[i] != '\n')
         i++;
-    if (storage[i] == '\n')
+    if ((*storage)[i] == '\n')
         i++;
-    result = ft_substr(storage, 0, i);
-    temp = ft_strdup(storage + i);
-    free(storage);
-    storage = temp;
-    free(temp);
+    result = ft_substr((*storage), 0, i);
+    if (!result)
+        return (NULL);
+    temp = ft_strdup((*storage) + i);
+    free(*storage);
+    (*storage) = temp;
     return (result);
+}
+char *ft_check_read_storage(char **storage)
+{
+    if (!storage && !**storage)
+    {
+        free(*storage);
+        *storage = NULL;
+        return (*storage);
+    }
+    return (*storage);
 }
 
 char    *get_next_line(int fd)
@@ -44,19 +55,20 @@ char    *get_next_line(int fd)
     i = 0;
     if (fd < 0 || BUFFER_SIZE <= 0)
         return (NULL);
+    printf("\n--storage : %s--\n", storage);
     if (!storage)
         storage =  ft_strdup("");
     while (!ft_strchr(storage, '\n'))
     {
         read_size = read(fd, data, BUFFER_SIZE);
         if (read_size <= 0)
-            return (NULL);
+            return (ft_check_read_storage(&storage));
         data[read_size] = '\0';
-        temp = ft_strjoin(storage, data);
+    	temp = ft_strjoin(storage, data);
         free(storage);
         storage = temp;
     }
     if (!storage)
-        return (free(storage), NULL);
-    return (ft_save_storage(storage)); 
+        return (free(storage),storage = NULL, NULL);
+    return (ft_save_storage(&storage));
 }
