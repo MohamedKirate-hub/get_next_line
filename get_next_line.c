@@ -6,11 +6,25 @@
 /*   By: mkirate <mkirate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 14:00:09 by mkirate           #+#    #+#             */
-/*   Updated: 2025/11/04 13:13:25 by mkirate          ###   ########.fr       */
+/*   Updated: 2025/11/04 14:18:50 by mkirate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char     *ft_strncpy(char *dest, char *src, size_t size)
+{
+        size_t  i;
+
+        i = 0;
+        while (i < size)
+        {
+                dest[i] = src[i];
+                i++;
+        }
+        dest[i] = '\0';
+        return (dest);
+}
 
 char *ft_save_storage(char **storage)
 {
