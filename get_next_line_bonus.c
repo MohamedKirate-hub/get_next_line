@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkirate <mkirate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/31 14:00:09 by mkirate           #+#    #+#             */
-/*   Updated: 2025/11/04 18:29:54 by mkirate          ###   ########.fr       */
+/*   Created: 2025/11/04 18:33:12 by mkirate           #+#    #+#             */
+/*   Updated: 2025/11/04 18:36:06 by mkirate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_strncpy(char *dest, char *src, size_t size)
 {
@@ -63,26 +63,26 @@ char	*ft_check_read_storage(char **storage)
 char	*get_next_line(int fd)
 {
     char *data;
-	static char *storage;
+	static char *storage[ARRAY_MAX];
     char *temp;
     int read_size;
     
 	data = (char *)malloc(BUFFER_SIZE + 1);
     if (fd < 0 || BUFFER_SIZE <= 0 || !data)
         return (NULL);
-    if (!storage)
-        storage =  ft_strdup("");
-    while (!ft_strchr(storage, '\n'))
+    if (!storage[fd])
+        storage[fd] =  ft_strdup("");
+    while (!ft_strchr(storage[fd], '\n'))
     {
         read_size = read(fd, data, BUFFER_SIZE);
         if (read_size <= 0)
-            return (ft_check_read_storage(&storage));
+            return (ft_check_read_storage(&storage[fd]));
         data[read_size] = '\0';
-    	temp = ft_strjoin(storage, data);
+    	temp = ft_strjoin(storage[fd], data);
         free(storage);
-        storage = temp;
+        storage[fd] = temp;
     }
     if (!storage)
-        return (free(storage),storage = NULL, NULL);
-    return (free(data), ft_save_storage(&storage));
+        return (free(storage[fd]),storage[fd] = NULL, NULL);
+    return (free(data), ft_save_storage(&storage[fd]));
 }

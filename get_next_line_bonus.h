@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkirate <mkirate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/31 14:00:22 by mkirate           #+#    #+#             */
-/*   Updated: 2025/11/04 18:34:31 by mkirate          ###   ########.fr       */
+/*   Created: 2025/11/04 18:31:16 by mkirate           #+#    #+#             */
+/*   Updated: 2025/11/04 18:37:30 by mkirate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE
-# define GET_NEXT_LINE
+//ulimit -n
+
+#ifndef GET_NEXT_LINE_BONUS
+#define GET_NEXT_LINE_BONUS
 
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
 
+#define ARRAY_MAX 1024
+
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 42
-#endif 
+
+#define BUFFER_SIZE 42
+
+#endif
 
 char    *get_next_line(int fd);
 char    *ft_strjoin(char *s1, char *s2);
