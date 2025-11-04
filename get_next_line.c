@@ -6,7 +6,7 @@
 /*   By: mkirate <mkirate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 14:00:09 by mkirate           #+#    #+#             */
-/*   Updated: 2025/11/04 12:07:39 by mkirate          ###   ########.fr       */
+/*   Updated: 2025/11/04 12:38:35 by mkirate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,11 @@ char *ft_check_read_storage(char **storage)
 
 char    *get_next_line(int fd)
 {
-    char data[BUFFER_SIZE];
+    char data[BUFFER_SIZE + 1];
     static char *storage;
     char *temp;
-    int i;
     int read_size;
     
-    i = 0;
     if (fd < 0 || BUFFER_SIZE <= 0)
         return (NULL);
     if (!storage)

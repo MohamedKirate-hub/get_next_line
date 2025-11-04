@@ -6,7 +6,7 @@
 /*   By: mkirate <mkirate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 14:00:22 by mkirate           #+#    #+#             */
-/*   Updated: 2025/11/04 11:22:37 by mkirate          ###   ########.fr       */
+/*   Updated: 2025/11/04 12:25:53 by mkirate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@
 
 #include <stdio.h>
 
-
-# define BUFFER_SIZE 1
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 42
+#endif 
 
 char    *get_next_line(int fd);
 char    *ft_strjoin(char *s1, char *s2);
