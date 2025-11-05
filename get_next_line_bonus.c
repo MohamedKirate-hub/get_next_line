@@ -6,7 +6,7 @@
 /*   By: mkirate <mkirate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 18:33:12 by mkirate           #+#    #+#             */
-/*   Updated: 2025/11/04 18:36:06 by mkirate          ###   ########.fr       */
+/*   Updated: 2025/11/05 08:11:52 by mkirate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*ft_check_read_storage(char **storage)
     return *storage;
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line_bonus(int fd)
 {
     char *data;
 	static char *storage[ARRAY_MAX];
@@ -79,10 +79,10 @@ char	*get_next_line(int fd)
             return (ft_check_read_storage(&storage[fd]));
         data[read_size] = '\0';
     	temp = ft_strjoin(storage[fd], data);
-        free(storage);
+        free(storage[fd]);
         storage[fd] = temp;
     }
-    if (!storage)
+    if (!storage[fd])
         return (free(storage[fd]),storage[fd] = NULL, NULL);
     return (free(data), ft_save_storage(&storage[fd]));
 }
