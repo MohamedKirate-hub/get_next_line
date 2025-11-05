@@ -6,7 +6,7 @@
 /*   By: mkirate <mkirate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 14:00:09 by mkirate           #+#    #+#             */
-/*   Updated: 2025/11/04 18:29:54 by mkirate          ###   ########.fr       */
+/*   Updated: 2025/11/05 18:38:53 by mkirate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,17 @@ char	*get_next_line(int fd)
     int read_size;
     
 	data = (char *)malloc(BUFFER_SIZE + 1);
-    if (fd < 0 || BUFFER_SIZE <= 0 || !data)
+    if (!data)
         return (NULL);
+    if (fd < 0 || BUFFER_SIZE <= 0)
+        return (free(data), NULL);
     if (!storage)
         storage =  ft_strdup("");
     while (!ft_strchr(storage, '\n'))
     {
         read_size = read(fd, data, BUFFER_SIZE);
         if (read_size <= 0)
-            return (ft_check_read_storage(&storage));
+            return (free(data), ft_check_read_storage(&storage));
         data[read_size] = '\0';
     	temp = ft_strjoin(storage, data);
         free(storage);

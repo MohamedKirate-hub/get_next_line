@@ -19,4 +19,6 @@ int main()
         printf("%s", line2);
         free(line2);
     }
+    free(line);
+    free(line2);
 }
