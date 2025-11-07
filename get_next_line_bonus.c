@@ -22,7 +22,8 @@ char	*ft_strncpy(char *dest, char *src, size_t size)
                 dest[i] = src[i];
                 i++;
         }
-        dest[i] = '\0';
+		while (i < size)
+        	dest[i] = '\0';
         return (dest);
 }
 
@@ -33,7 +34,7 @@ char	*ft_save_storage(char **storage)
     int i;
 
     i = 0;
-    if (!*storage || !storage)
+    if (!storage || !*storage)
         return (NULL);
     while ((*storage)[i] != '\0' && (*storage)[i] != '\n')
         i++;
@@ -89,7 +90,5 @@ char	*get_next_line_bonus(int fd)
         free(storage[fd]);
         storage[fd] = temp;
     }
-    if (!storage[fd])
-        return (free(storage[fd]),storage[fd] = NULL, NULL);
     return (free(data), ft_save_storage(&storage[fd]));
 }
